@@ -1,0 +1,29 @@
+# stop_and_check_with_logging.yml
+- hosts: localhost
+  tasks:
+    - name: Stop Application 1
+      command: /home/appusr/ansible/stop.sh
+      register: stop_result
+
+    - name: Print stop result for Application 1
+      debug:
+        msg: "Stop Application 1 result: {{ stop_result.stdout }}"
+
+    - name: Wait for Application 1 to stop
+      pause:
+        seconds: 5
+
+    - name: Check if Application 1 is stopped
+      shell: "pgrep -fl 'kafka-ui-api-v0.7.2.jar' | grep java || echo 'stopped'"
+      register: status_result
+      ignore_errors: yes
+
+    - name: Print status result for Application 1
+      debug:
+        msg: "Status of Application 1: {{ status_result.stdout }}"
+
+    - name: Ensure Application 1 is stopped
+      fail:
+        msg: "Application 1 is still running with PID(s): {{ status_result.stdout }}"
+      when: status_result.stdout != "stopped"
+
