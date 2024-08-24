@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        ANSIBLE_PLAYBOOK = 'stop_and_check_with_logging.yml'
+        ANSIBLE_PLAYBOOK = 'playbook.yml'
         ANSIBLE_INVENTORY = 'localhost,'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://your-git-repo-url.git', branch: 'main'
+                git url: 'https://github.com/vijaysarangapani/sarangapani.git', branch: 'main'
             }
         }
 
