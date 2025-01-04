@@ -1,6 +1,0 @@
-connect localhost:10090
-batch
-deploy F:\Softwares\sampleapplications\Calendar.war
-deploy F:\Softwares\sampleapplications\supermarket.war
-undeploy TestServerKrishna.war
-run-batch
